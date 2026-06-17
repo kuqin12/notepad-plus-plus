@@ -436,7 +436,7 @@ BufferID Notepad_plus::doOpen(const wstring& fileName, bool isRecursive, bool is
     scnN.nmhdr.code = NPPN_FILEBEFORELOAD;
     scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
     scnN.nmhdr.idFrom = 0;
-    _pluginsManager.notify(&scnN);
+    //_pluginsManager.notify(&scnN);
 
     if (encoding == -1)
     {
@@ -455,7 +455,7 @@ BufferID Notepad_plus::doOpen(const wstring& fileName, bool isRecursive, bool is
 			scnN2.nmhdr.hwndFrom = 0;
 			scnN2.nmhdr.idFrom = (uptr_t)buffer;
 			scnN2.nmhdr.code = NPPN_SNAPSHOTDIRTYFILELOADED;
-			_pluginsManager.notify(&scnN2);
+			//_pluginsManager.notify(&scnN2);
 
 			buffer->setLoadedDirty(true);
 		}
@@ -478,7 +478,7 @@ BufferID Notepad_plus::doOpen(const wstring& fileName, bool isRecursive, bool is
         // Notify plugins that current file is about to open
         scnN.nmhdr.code = NPPN_FILEBEFOREOPEN;
         scnN.nmhdr.idFrom = (uptr_t)buffer;
-        _pluginsManager.notify(&scnN);
+        //_pluginsManager.notify(&scnN);
 
 
         loadBufferIntoView(buffer, currentView());
@@ -499,7 +499,7 @@ BufferID Notepad_plus::doOpen(const wstring& fileName, bool isRecursive, bool is
 
         // Notify plugins that current file is just opened
         scnN.nmhdr.code = NPPN_FILEOPENED;
-        _pluginsManager.notify(&scnN);
+        //_pluginsManager.notify(&scnN);
         if (_pDocumentListPanel)
             _pDocumentListPanel->newItem(buf, currentView());
     }
@@ -567,7 +567,7 @@ BufferID Notepad_plus::doOpen(const wstring& fileName, bool isRecursive, bool is
             _isFileOpening = false;
 
             scnN.nmhdr.code = NPPN_FILELOADFAILED;
-            _pluginsManager.notify(&scnN);
+            //_pluginsManager.notify(&scnN);
         }
     }
 #ifndef	_WIN64
@@ -695,7 +695,7 @@ bool Notepad_plus::doSave(BufferID id, const wchar_t * filename, bool isCopy)
 		scnN.nmhdr.code = NPPN_FILEBEFORESAVE;
 		scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 		scnN.nmhdr.idFrom = (uptr_t)id;
-		_pluginsManager.notify(&scnN);
+		//_pluginsManager.notify(&scnN);
 	}
 
 	SavingStatus res = MainFileManager.saveBuffer(id, filename, isCopy);
@@ -703,7 +703,7 @@ bool Notepad_plus::doSave(BufferID id, const wchar_t * filename, bool isCopy)
 	if (!isCopy)
 	{
 		scnN.nmhdr.code = NPPN_FILESAVED;
-		_pluginsManager.notify(&scnN);
+		//_pluginsManager.notify(&scnN);
 	}
 
 	if (res == SavingStatus::FullReadOnlySavingForbidden)
@@ -865,7 +865,7 @@ void Notepad_plus::doClose(BufferID id, int whichOne, bool doDeleteBackup)
 	scnN.nmhdr.code = NPPN_FILEBEFORECLOSE;
 	scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 	scnN.nmhdr.idFrom = (uptr_t)id;
-	_pluginsManager.notify(&scnN);
+	//_pluginsManager.notify(&scnN);
 
 	// Add to recent file history only if file is removed from all the views
 	// There might be cases when file is cloned/moved to view.
@@ -930,7 +930,7 @@ void Notepad_plus::doClose(BufferID id, int whichOne, bool doDeleteBackup)
 	if (isBufRemoved)
 	{
 		scnN.nmhdr.code = NPPN_FILECLOSED;
-		_pluginsManager.notify(&scnN);
+		//_pluginsManager.notify(&scnN);
 
 		// The document could be cloned.
 		// if the same buffer ID is not found then remove the entry from File Switcher Panel
@@ -2120,10 +2120,10 @@ bool Notepad_plus::fileRename(BufferID bufferID)
 
 		if (!fn.empty())
 		{
-			_pluginsManager.notify(&scnN);
+			//_pluginsManager.notify(&scnN);
 			success = MainFileManager.moveFile(bufferID, fn.c_str());
 			scnN.nmhdr.code = success ? NPPN_FILERENAMED : NPPN_FILERENAMECANCEL;
-			_pluginsManager.notify(&scnN);
+			//_pluginsManager.notify(&scnN);
 		}
 	}
 	else
@@ -2170,12 +2170,12 @@ bool Notepad_plus::fileRename(BufferID bufferID)
 			}
 			else // The change will be done here
 			{
-				_pluginsManager.notify(&scnN); // send NPPN_FILEBEFORERENAME
+				//_pluginsManager.notify(&scnN); // send NPPN_FILEBEFORERENAME
 
 				buf->setFileName(tabNewNameStr.c_str());
 
 				scnN.nmhdr.code = NPPN_FILERENAMED;
-				_pluginsManager.notify(&scnN);
+				//_pluginsManager.notify(&scnN);
 
 				success = true;
 				buf->setUntitledTabRenamedStatus(true);
@@ -2228,7 +2228,7 @@ bool Notepad_plus::useFirstLineAsTabName(BufferID bufferID)
 		scnNotif.nmhdr.code = NPPN_FILEBEFORERENAME;
 		scnNotif.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 		scnNotif.nmhdr.idFrom = (uptr_t)buffer->getID();
-		_pluginsManager.notify(&scnNotif);
+		//_pluginsManager.notify(&scnNotif);
 
 		// backup old file path
 		wstring oldFileNamePath = buffer->getFullPathName();
@@ -2238,7 +2238,7 @@ bool Notepad_plus::useFirstLineAsTabName(BufferID bufferID)
 
 		// notify tab renamed
 		scnNotif.nmhdr.code = NPPN_FILERENAMED;
-		_pluginsManager.notify(&scnNotif);
+		//_pluginsManager.notify(&scnNotif);
 
 		// for the backup system
 		wstring oldBackUpFileName = buffer->getBackupFileName();
@@ -2305,13 +2305,13 @@ bool Notepad_plus::fileRenameUntitledPluginAPI(BufferID id, const wchar_t* tabNe
 	scnN.nmhdr.code = NPPN_FILEBEFORERENAME;
 	scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 	scnN.nmhdr.idFrom = (uptr_t)bufferID;
-	_pluginsManager.notify(&scnN);
+	//_pluginsManager.notify(&scnN);
 
 	wstring oldName = buf->getFullPathName();
 	buf->setFileName(tabNewNameStr.c_str());
 
 	scnN.nmhdr.code = NPPN_FILERENAMED;
-	_pluginsManager.notify(&scnN);
+	//_pluginsManager.notify(&scnN);
 
 	buf->setUntitledTabRenamedStatus(true);
 
@@ -2361,7 +2361,7 @@ bool Notepad_plus::fileDelete(BufferID id)
 		scnN.nmhdr.code = NPPN_FILEBEFOREDELETE;
 		scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 		scnN.nmhdr.idFrom = (uptr_t)bufferID;
-		_pluginsManager.notify(&scnN);
+		//_pluginsManager.notify(&scnN);
 
 		if (!MainFileManager.deleteFile(bufferID))
 		{
@@ -2372,7 +2372,7 @@ bool Notepad_plus::fileDelete(BufferID id)
 				MB_OK);
 
 			scnN.nmhdr.code = NPPN_FILEDELETEFAILED;
-			_pluginsManager.notify(&scnN);
+			//_pluginsManager.notify(&scnN);
 
 			return false;
 		}
@@ -2381,7 +2381,7 @@ bool Notepad_plus::fileDelete(BufferID id)
 		doClose(bufferID, SUB_VIEW, isSnapshotMode);
 
 		scnN.nmhdr.code = NPPN_FILEDELETED;
-		_pluginsManager.notify(&scnN);
+		//_pluginsManager.notify(&scnN);
 
 		return true;
 	}

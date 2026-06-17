@@ -29,7 +29,8 @@
 #include "columnEditor.h"
 #include "WordStyleDlg.h"
 #include "trayIconControler.h"
-#include "PluginsManager.h"
+//#include "PluginsManager.h"
+#include "PluginInterface.h"
 #include "preferenceDlg.h"
 #include "WindowsDlg.h"
 #include "RunMacroDlg.h"
@@ -266,7 +267,8 @@ public:
 	void showQuote(const QuoteParams* quote) const;
 
 	std::wstring getPluginListVerStr() const {
-		return _pluginsAdminDlg.getPluginListVerStr();
+		// return _pluginsAdminDlg.getPluginListVerStr();
+		return L"";
 	}
 
 	void minimizeDialogs();
@@ -336,7 +338,7 @@ private:
 	WordStyleDlg _configStyleDlg;
 	PreferenceDlg _preference;
 	FindCharsInRangeDlg _findCharsInRangeDlg;
-	PluginsAdminDlg _pluginsAdminDlg;
+	// PluginsAdminDlg _pluginsAdminDlg;
 	DocumentPeeker _documentPeeker;
 
 	// a handle list of all the Notepad++ dialogs
@@ -395,7 +397,7 @@ private:
 	Accelerator _accelerator;
 	ScintillaAccelerator _scintaccelerator;
 
-	PluginsManager _pluginsManager;
+	//PluginsManager _pluginsManager;
     ButtonDlg _restoreButton;
 
 	bool _isFileOpening = false;

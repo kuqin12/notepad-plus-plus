@@ -3471,13 +3471,13 @@ void Notepad_plus::command(int id)
 
 		case IDM_SETTING_PLUGINADM:
 		{
-			bool isFirstTime = !_pluginsAdminDlg.isCreated();
-			_pluginsAdminDlg.doDialog(_nativeLangSpeaker.isRTL());
-			if (isFirstTime)
-			{
-				_nativeLangSpeaker.changePluginsAdminDlgLang(_pluginsAdminDlg);
-				_pluginsAdminDlg.updateList();
-			}
+			// bool isFirstTime = !_pluginsAdminDlg.isCreated();
+			// _pluginsAdminDlg.doDialog(_nativeLangSpeaker.isRTL());
+			// if (isFirstTime)
+			// {
+			// 	_nativeLangSpeaker.changePluginsAdminDlgLang(_pluginsAdminDlg);
+			// 	_pluginsAdminDlg.updateList();
+			// }
 			break;
 		}
 
@@ -4394,15 +4394,15 @@ void Notepad_plus::command(int id)
 				Command cmd(string2wstring(ucmd.getCmd(), CP_UTF8));
 				cmd.run(_pPublicInterface->getHSelf());
 			}
-			else if ((id >= ID_PLUGINS_CMD) && (id < ID_PLUGINS_CMD_LIMIT))
-			{
-				int i = id - ID_PLUGINS_CMD;
-				_pluginsManager.runPluginCommand(i);
-			}
-			else if (_pluginsManager.inDynamicRange(id)) // in the dynamic range allocated with NPPM_ALLOCATECMDID
-			{
-				_pluginsManager.relayNppMessages(WM_COMMAND, id, 0);
-			}
+			//else if ((id >= ID_PLUGINS_CMD) && (id < ID_PLUGINS_CMD_LIMIT))
+			//{
+			//	int i = id - ID_PLUGINS_CMD;
+			//	_pluginsManager.runPluginCommand(i);
+			//}
+			//else if (_pluginsManager.inDynamicRange(id)) // in the dynamic range allocated with NPPM_ALLOCATECMDID
+			//{
+			//	_pluginsManager.relayNppMessages(WM_COMMAND, id, 0);
+			//}
 			else if ((id >= IDM_WINDOW_MRU_FIRST) && (id <= IDM_WINDOW_MRU_LIMIT))
 			{
 				activateDoc(id - IDM_WINDOW_MRU_FIRST);

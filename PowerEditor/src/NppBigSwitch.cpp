@@ -288,7 +288,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_DARKMODECHANGED;
 			scnN.nmhdr.hwndFrom = hwnd;
 			scnN.nmhdr.idFrom = 0;
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
@@ -300,7 +300,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_TOOLBARICONSETCHANGED;
 			scnN.nmhdr.hwndFrom = hwnd;
 			scnN.nmhdr.idFrom = _toolBar.getState();
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
@@ -642,7 +642,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_DOCORDERCHANGED;
 			scnN.nmhdr.hwndFrom = reinterpret_cast<void *>(lParam);
 			scnN.nmhdr.idFrom = reinterpret_cast<uptr_t>(id);
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
@@ -757,7 +757,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 							scnN.nmhdr.code = NPPN_CMDLINEPLUGINMSG;
 							scnN.nmhdr.hwndFrom = hwnd;
 							scnN.nmhdr.idFrom = reinterpret_cast<uptr_t>(pluginMessage.c_str());
-							_pluginsManager.notify(&scnN);
+							// _pluginsManager.notify(&scnN);
 						}
 					}
 					else
@@ -858,7 +858,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 				scnN.nmhdr.code = NPPN_NATIVELANGCHANGED;
 				scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 				scnN.nmhdr.idFrom = 0;
-				_pluginsManager.notify(&scnN);
+				// _pluginsManager.notify(&scnN);
 			}
 			return TRUE;
 		}
@@ -875,16 +875,17 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_SHORTCUTREMAPPED;
 			scnN.nmhdr.hwndFrom = reinterpret_cast<void *>(lParam); // ShortcutKey structure
 			scnN.nmhdr.idFrom = (uptr_t)wParam; // cmdID
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
 		case NPPM_GETSHORTCUTBYCMDID:
 		{
-			int cmdID = static_cast<int32_t>(wParam); // cmdID
-			ShortcutKey *sk = reinterpret_cast<ShortcutKey *>(lParam); // ShortcutKey structure
+			// int cmdID = static_cast<int32_t>(wParam); // cmdID
+			// ShortcutKey *sk = reinterpret_cast<ShortcutKey *>(lParam); // ShortcutKey structure
 
-			return _pluginsManager.getShortcutByCmdID(cmdID, sk);
+			// return _pluginsManager.getShortcutByCmdID(cmdID, sk);
+			return FALSE; // not supported anymore, just return false to avoid compatibility issue for old plugins
 		}
 
 		case NPPM_MENUCOMMAND:
@@ -1668,9 +1669,9 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 
 		case NPPM_GETMENUHANDLE:
 		{
-			if (wParam == NPPPLUGINMENU)
-				return (LRESULT)_pluginsManager.getMenuHandle();
-			else if (wParam == NPPMAINMENU)
+			// if (wParam == NPPPLUGINMENU)
+				// return (LRESULT)_pluginsManager.getMenuHandle();
+			if (wParam == NPPMAINMENU)
 				return (LRESULT)_mainMenuHandle;
 			else
 				return static_cast<LRESULT>(NULL);
@@ -2245,7 +2246,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			if (wParam == LINKTRIGGERED)
 				notification->wParam = LINKTRIGGERED;
 
-			_pluginsManager.notify(notification);
+			// _pluginsManager.notify(notification);
 
 			return notify(notification);
 		}
@@ -2466,7 +2467,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_WORDSTYLESUPDATED;
 			scnN.nmhdr.hwndFrom = hwnd;
 			scnN.nmhdr.idFrom = (uptr_t) _pEditView->getCurrentBufferID();
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
@@ -2496,7 +2497,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_EXTERNALLEXERBUFFER;
 			scnN.nmhdr.hwndFrom = hwnd;
 			scnN.nmhdr.idFrom = lParam;
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
@@ -2681,7 +2682,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 				scnN.nmhdr.hwndFrom = hwnd;
 				scnN.nmhdr.idFrom = 0;
 				scnN.nmhdr.code = NPPN_BEFORESHUTDOWN;
-				_pluginsManager.notify(&scnN);
+				// _pluginsManager.notify(&scnN);
 
 				if (_pTrayIco)
 					_pTrayIco->doTrayIcon(REMOVE);
@@ -2721,7 +2722,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 				{
 					// cancelled by user
 					scnN.nmhdr.code = NPPN_CANCELSHUTDOWN;
-					_pluginsManager.notify(&scnN);
+					// _pluginsManager.notify(&scnN);
 					if (isSnapshotMode)
 						::LockWindowUpdate(NULL);
 
@@ -2750,7 +2751,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 					_configStyleDlg.restoreGlobalOverrideValues();
 
 				scnN.nmhdr.code = NPPN_SHUTDOWN;
-				_pluginsManager.notify(&scnN);
+				// _pluginsManager.notify(&scnN);
 
 				saveScintillasZoom();
 
@@ -3132,7 +3133,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 
 		case NPPM_MSGTOPLUGIN :
 		{
-			return _pluginsManager.relayPluginMessages(message, wParam, lParam);
+			// return _pluginsManager.relayPluginMessages(message, wParam, lParam);
 		}
 
 		case NPPM_ALLOCATESUPPORTED_DEPRECATED:
@@ -3142,17 +3143,17 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 
 		case NPPM_ALLOCATECMDID:
 		{
-			return _pluginsManager.allocateCmdID(static_cast<int32_t>(wParam), reinterpret_cast<int *>(lParam));
+			// return _pluginsManager.allocateCmdID(static_cast<int32_t>(wParam), reinterpret_cast<int *>(lParam));
 		}
 
 		case NPPM_ALLOCATEMARKER:
 		{
-			return _pluginsManager.allocateMarker(static_cast<int32_t>(wParam), reinterpret_cast<int *>(lParam));
+			// return _pluginsManager.allocateMarker(static_cast<int32_t>(wParam), reinterpret_cast<int *>(lParam));
 		}
 
 		case NPPM_ALLOCATEINDICATOR:
 		{
-			return _pluginsManager.allocateIndicator(static_cast<int32_t>(wParam), reinterpret_cast<int *>(lParam));
+			// return _pluginsManager.allocateIndicator(static_cast<int32_t>(wParam), reinterpret_cast<int *>(lParam));
 		}
 
 		case NPPM_GETTABCOLORID:
@@ -3600,8 +3601,9 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 
 		case NPPM_REMOVESHORTCUTBYCMDID:
 		{
-			int cmdID = static_cast<int32_t>(wParam);
-			return _pluginsManager.removeShortcutByCmdID(cmdID);
+			// int cmdID = static_cast<int32_t>(wParam);
+			// return _pluginsManager.removeShortcutByCmdID(cmdID);
+			return FALSE; // Not supported anymore, as plugins should manage their own shortcuts by themselves, and not rely on Notepad++ to do it for them (which was the old behavior)
 		}
 
 		//
@@ -3838,7 +3840,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 			scnN.nmhdr.code = NPPN_GLOBALMODIFIED;
 			scnN.nmhdr.hwndFrom = reinterpret_cast<void*>(wParam);
 			scnN.nmhdr.idFrom = 0;
-			_pluginsManager.notify(&scnN);
+			// _pluginsManager.notify(&scnN);
 			return TRUE;
 		}
 
@@ -4318,7 +4320,7 @@ LRESULT Notepad_plus::process(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 		}
 	}
 
-	_pluginsManager.relayNppMessages(message, wParam, lParam);
+	// _pluginsManager.relayNppMessages(message, wParam, lParam);
 	return result;
 }
 

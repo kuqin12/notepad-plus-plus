@@ -901,69 +901,69 @@ void NativeLangSpeaker::changeFindReplaceDlgLang(FindReplaceDlg& findReplaceDlg)
 	changeDlgLang(findReplaceDlg.getHSelf(), "Find");
 }
 
-void NativeLangSpeaker::changePluginsAdminDlgLang(PluginsAdminDlg& pluginsAdminDlg)
-{
-	if (_nativeLang)
-	{
-		NppXml::Element dlgNode = NppXml::firstChildElement(_nativeLang, "Dialog");
-		if (dlgNode)
-		{
-			dlgNode = searchDlgNode(dlgNode, "PluginsAdminDlg");
-			if (dlgNode)
-			{
-				NppXml::Element ColumnPluginNode = NppXml::firstChildElement(dlgNode, "ColumnPlugin");
-				if (ColumnPluginNode)
-				{
-					const char* name = NppXml::attribute(ColumnPluginNode, "name");
-					if (name && name[0])
-					{
-						const std::wstring nameW = string2wstring(name, _nativeLangEncoding);
-						pluginsAdminDlg.changeColumnName(COLUMN_PLUGIN, nameW.c_str());
-					}
-				}
+//void NativeLangSpeaker::changePluginsAdminDlgLang(PluginsAdminDlg& pluginsAdminDlg)
+//{
+//	if (_nativeLang)
+//	{
+//		NppXml::Element dlgNode = NppXml::firstChildElement(_nativeLang, "Dialog");
+//		if (dlgNode)
+//		{
+//			dlgNode = searchDlgNode(dlgNode, "PluginsAdminDlg");
+//			if (dlgNode)
+//			{
+//				NppXml::Element ColumnPluginNode = NppXml::firstChildElement(dlgNode, "ColumnPlugin");
+//				if (ColumnPluginNode)
+//				{
+//					const char* name = NppXml::attribute(ColumnPluginNode, "name");
+//					if (name && name[0])
+//					{
+//						const std::wstring nameW = string2wstring(name, _nativeLangEncoding);
+//						pluginsAdminDlg.changeColumnName(COLUMN_PLUGIN, nameW.c_str());
+//					}
+//				}
 
-				NppXml::Element ColumnVersionNode = NppXml::firstChildElement(dlgNode, "ColumnVersion");
-				if (ColumnVersionNode)
-				{
-					const char* name = NppXml::attribute(ColumnVersionNode, "name");
-					if (name && name[0])
-					{
-						const std::wstring nameW = string2wstring(name, _nativeLangEncoding);
-						pluginsAdminDlg.changeColumnName(COLUMN_VERSION, nameW.c_str());
-					}
-				}
+//				NppXml::Element ColumnVersionNode = NppXml::firstChildElement(dlgNode, "ColumnVersion");
+//				if (ColumnVersionNode)
+//				{
+//					const char* name = NppXml::attribute(ColumnVersionNode, "name");
+//					if (name && name[0])
+//					{
+//						const std::wstring nameW = string2wstring(name, _nativeLangEncoding);
+//						pluginsAdminDlg.changeColumnName(COLUMN_VERSION, nameW.c_str());
+//					}
+//				}
 
-				const char* titre1 = NppXml::attribute(dlgNode, "titleAvailable");
-				const char* titre2 = NppXml::attribute(dlgNode, "titleUpdates");
-				const char* titre3 = NppXml::attribute(dlgNode, "titleInstalled");
-				const char* titre4 = NppXml::attribute(dlgNode, "titleIncompatible");
+// 				const char *titre1 = (dlgNode->ToElement())->Attribute("titleAvailable");
+// 				const char *titre2 = (dlgNode->ToElement())->Attribute("titleUpdates");
+// 				const char *titre3 = (dlgNode->ToElement())->Attribute("titleInstalled");
+// 				const char *titre4 = (dlgNode->ToElement())->Attribute("titleIncompatible");
 
-				if (titre1 && titre1[0])
-				{
-					std::wstring nameW = string2wstring(titre1, _nativeLangEncoding);
-					pluginsAdminDlg.changeTabName(AVAILABLE_LIST, nameW.data());
-				}
-				if (titre2 && titre2[0])
-				{
-					std::wstring nameW = string2wstring(titre2, _nativeLangEncoding);
-					pluginsAdminDlg.changeTabName(UPDATES_LIST, nameW.data());
-				}
-				if (titre3 && titre3[0])
-				{
-					std::wstring nameW = string2wstring(titre3, _nativeLangEncoding);
-					pluginsAdminDlg.changeTabName(INSTALLED_LIST, nameW.data());
-				}
-				if (titre4 && titre4[0])
-				{
-					std::wstring nameW = string2wstring(titre4, _nativeLangEncoding);
-					pluginsAdminDlg.changeTabName(INCOMPATIBLE_LIST, nameW.data());
-				}
-			}
+//				if (titre1 && titre1[0])
+//				{
+//					std::wstring nameW = string2wstring(titre1, _nativeLangEncoding);
+//					pluginsAdminDlg.changeTabName(AVAILABLE_LIST, nameW.data());
+//				}
+//				if (titre2 && titre2[0])
+//				{
+//					std::wstring nameW = string2wstring(titre2, _nativeLangEncoding);
+//					pluginsAdminDlg.changeTabName(UPDATES_LIST, nameW.data());
+//				}
+//				if (titre3 && titre3[0])
+//				{
+//					std::wstring nameW = string2wstring(titre3, _nativeLangEncoding);
+//					pluginsAdminDlg.changeTabName(INSTALLED_LIST, nameW.data());
+//				}
+//				if (titre4 && titre4[0])
+//				{
+//					std::wstring nameW = string2wstring(titre4, _nativeLangEncoding);
+//					pluginsAdminDlg.changeTabName(INCOMPATIBLE_LIST, nameW.data());
+//				}
+//			}
 
-			changeDlgLang(pluginsAdminDlg.getHSelf(), "PluginsAdminDlg");
-		}
-	}
-}
+// 			changeDlgLang(pluginsAdminDlg.getHSelf(), "PluginsAdminDlg");
+// 		}
+// 	}
+// }
 
 void NativeLangSpeaker::changePreferenceDlgLang(PreferenceDlg& preference) const
 {
@@ -1353,7 +1353,7 @@ std::wstring NativeLangSpeaker::getDlgLangMenuStr(const char* firstLevelNodeName
 		childNode = NppXml::nextSiblingElement(childNode, "Item"))
 	{
 		// depends on which menu (Find smap button, FolderAsWorkspace menu)
-		// smallest id starts with <Item id="1726" name="⇅ Swap Find with Replace"/>
+		// smallest id starts with <Item id="1726" name="? Swap Find with Replace"/>
 		const int id = NppXml::intAttribute(childNode, "id", -1);
 		if (id >= 0 && id == cmdID)
 		{

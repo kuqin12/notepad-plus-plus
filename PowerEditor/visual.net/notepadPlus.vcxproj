@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>Notepad++</ProjectName>
+    <ProjectName>testpad</ProjectName>
     <ProjectGuid>{FCF60E65-1B78-4D1D-AB59-4FC00AC8C248}</ProjectGuid>
     <RootNamespace>Notepad++</RootNamespace>
     <Keyword>Win32Proj</Keyword>
@@ -89,6 +89,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin64\</OutDir>
     <IntDir>x64\$(Configuration)\</IntDir>
+    <TargetName>testpad</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>..\binarm64\</OutDir>
@@ -122,7 +123,6 @@
     <ClCompile Include="..\src\MISC\Common\FileInterface.cpp" />
     <ClCompile Include="..\src\WinControls\ContextMenu\ContextMenu.cpp" />
     <ClCompile Include="..\src\WinControls\OpenSaveFileDialog\CustomFileDialog.cpp" />
-    <ClCompile Include="..\src\WinControls\PluginsAdmin\pluginsAdmin.cpp" />
     <ClCompile Include="..\src\WinControls\TabBar\ControlsTab.cpp" />
     <ClCompile Include="..\src\WinControls\DockingWnd\DockingCont.cpp" />
     <ClCompile Include="..\src\WinControls\DockingWnd\DockingManager.cpp" />
@@ -150,7 +150,6 @@
     <ClCompile Include="..\src\NppIO.cpp" />
     <ClCompile Include="..\src\NppNotification.cpp" />
     <ClCompile Include="..\src\Parameters.cpp" />
-    <ClCompile Include="..\src\Misc\PluginsManager\PluginsManager.cpp" />
     <ClCompile Include="..\src\WinControls\Preference\preferenceDlg.cpp" />
     <ClCompile Include="..\src\ScintillaComponent\Printer.cpp" />
     <ClCompile Include="..\src\MISC\Process\Processus.cpp" />
@@ -206,7 +205,6 @@
     <ResourceCompile Include="..\src\ScintillaComponent\FindReplaceDlg.rc" />
     <ResourceCompile Include="..\src\WinControls\FunctionList\functionListPanel.rc" />
     <ResourceCompile Include="..\src\Notepad_plus.rc" />
-    <ResourceCompile Include="..\src\WinControls\PluginsAdmin\pluginsAdmin.rc" />
     <ResourceCompile Include="..\src\WinControls\Preference\preference.rc" />
     <ResourceCompile Include="..\src\WinControls\ProjectPanel\ProjectPanel.rc" />
     <ResourceCompile Include="..\src\MISC\RegExt\regExtDlg.rc" />
@@ -269,8 +267,6 @@
     <ClInclude Include="..\src\MISC\Common\FileInterface.h" />
     <ClInclude Include="..\src\WinControls\ContextMenu\ContextMenu.h" />
     <ClInclude Include="..\src\WinControls\OpenSaveFileDialog\CustomFileDialog.h" />
-    <ClInclude Include="..\src\WinControls\PluginsAdmin\pluginsAdmin.h" />
-    <ClInclude Include="..\src\WinControls\PluginsAdmin\pluginsAdminRes.h" />
     <ClInclude Include="..\src\WinControls\Preference\preference_rc.h" />
     <ClInclude Include="..\src\WinControls\ReadDirectoryChanges\targetver.h" />
     <ClInclude Include="..\src\WinControls\shortcut\shortcutRc.h" />
@@ -307,8 +303,6 @@
     <ClInclude Include="..\src\MISC\PluginsManager\Notepad_plus_msgs.h" />
     <ClInclude Include="..\src\Notepad_plus_Window.h" />
     <ClInclude Include="..\src\Parameters.h" />
-    <ClInclude Include="..\src\MISC\PluginsManager\PluginInterface.h" />
-    <ClInclude Include="..\src\MISC\PluginsManager\PluginsManager.h" />
     <ClInclude Include="..\src\WinControls\Preference\preferenceDlg.h" />
     <ClInclude Include="..\src\ScintillaComponent\Printer.h" />
     <ClInclude Include="..\src\MISC\Process\Processus.h" />

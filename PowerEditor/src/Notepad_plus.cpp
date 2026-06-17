@@ -302,7 +302,7 @@ LRESULT Notepad_plus::init(HWND hwnd)
 
 	_configStyleDlg.init(_pPublicInterface->getHinst(), hwnd);
 	_preference.init(_pPublicInterface->getHinst(), hwnd);
-	_pluginsAdminDlg.init(_pPublicInterface->getHinst(), hwnd);
+	// _pluginsAdminDlg.init(_pPublicInterface->getHinst(), hwnd);
 
 	//Marker Margin config
 	_mainEditView.setMakerStyle(svp._folderStyle);
@@ -471,11 +471,11 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	nppData._scintillaSecondHandle = _subEditView.getHSelf();
 
 	_scintillaCtrls4Plugins.init(_pPublicInterface->getHinst(), hwnd);
-	_pluginsManager.init(nppData);
+	// _pluginsManager.init(nppData);
 
-	bool enablePluginAdmin = _pluginsAdminDlg.initFromJson();
+	// bool enablePluginAdmin = _pluginsAdminDlg.initFromJson();
 	std::chrono::steady_clock::time_point pluginsLoadingStartTP = std::chrono::steady_clock::now();
-	_pluginsManager.loadPlugins(nppParam.getPluginRootDir(), enablePluginAdmin ? &_pluginsAdminDlg.getAvailablePluginUpdateInfoList() : nullptr, enablePluginAdmin ? &_pluginsAdminDlg.getIncompatibleList() : nullptr);
+	// _pluginsManager.loadPlugins(nppParam.getPluginRootDir(), enablePluginAdmin ? &_pluginsAdminDlg.getAvailablePluginUpdateInfoList() : nullptr, enablePluginAdmin ? &_pluginsAdminDlg.getIncompatibleList() : nullptr);
 	g_pluginsLoadingTime = std::chrono::steady_clock::now() - pluginsLoadingStartTP;
 	_restoreButton.init(_pPublicInterface->getHinst(), hwnd);
 
@@ -613,8 +613,8 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	}
 
 	//Plugin menu
-	_pluginsAdminDlg.setPluginsManager(&_pluginsManager);
-	_pluginsManager.initMenu(_mainMenuHandle, enablePluginAdmin);
+	// _pluginsAdminDlg.setPluginsManager(&_pluginsManager);
+	// _pluginsManager.initMenu(_mainMenuHandle, enablePluginAdmin);
 
 	//Search menu
 	//disable "Search Results Window" under Search Menu 
@@ -627,10 +627,10 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	::EnableMenuItem(_mainMenuHandle, IDM_SEARCH_FINDPREV, MF_BYCOMMAND | MF_DISABLED | MF_GRAYED);
 
 	//Main menu is loaded, now load editor context menu items
-	nppParam.getContextMenuFromXmlTree(_mainMenuHandle, _pluginsManager.getMenuHandle());
+	// nppParam.getContextMenuFromXmlTree(_mainMenuHandle, _pluginsManager.getMenuHandle());
 
 	//Main menu is loaded, now load tab context menu items
-	nppParam.getContextMenuFromXmlTree(_mainMenuHandle, _pluginsManager.getMenuHandle(), false);
+	// nppParam.getContextMenuFromXmlTree(_mainMenuHandle, _pluginsManager.getMenuHandle(), false);
 
 	if (nppParam.hasCustomContextMenu())
 	{
@@ -711,7 +711,7 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	scnN.nmhdr.code = NPPN_TBMODIFICATION;
 	scnN.nmhdr.hwndFrom = hwnd;
 	scnN.nmhdr.idFrom = 0;
-	_pluginsManager.notify(&scnN);
+	// _pluginsManager.notify(&scnN);
 
 	_toolBar.init(_pPublicInterface->getHinst(), hwnd, tbStatus, toolBarIcons, sizeof(toolBarIcons) / sizeof(ToolBarButtonUnit));
 
@@ -731,7 +731,7 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	_findCharsInRangeDlg.init(_pPublicInterface->getHinst(), hwnd, &_pEditView);
 	_colEditorDlg.init(_pPublicInterface->getHinst(), hwnd, &_pEditView);
 	_aboutDlg.init(_pPublicInterface->getHinst(), hwnd);
-	_debugInfoDlg.init(_pPublicInterface->getHinst(), hwnd, _isAdministrator, _pluginsManager.getLoadedPluginNames());
+	// _debugInfoDlg.init(_pPublicInterface->getHinst(), hwnd, _isAdministrator, _pluginsManager.getLoadedPluginNames());
 	_cmdLineArgsDlg.init(_pPublicInterface->getHinst(), hwnd);
 	_runDlg.init(_pPublicInterface->getHinst(), hwnd);
 	_runMacroDlg.init(_pPublicInterface->getHinst(), hwnd);
@@ -850,8 +850,8 @@ LRESULT Notepad_plus::init(HWND hwnd)
 			{
 				if (isInternalFunc)
 					_internalFuncIDs.push_back(pdi._internalID);
-				else
-					_pluginsManager.runPluginCommand(pdi._name.c_str(), pdi._internalID);
+				//else
+					// _pluginsManager.runPluginCommand(pdi._name.c_str(), pdi._internalID);
 			}
 		}
 
@@ -3908,7 +3908,7 @@ BOOL Notepad_plus::processTabSwitchAccel(MSG* msg) const
 		};
 	
 	if (isRightDlg(_findReplaceDlg.getHSelf())
-		|| isRightDlg(_pluginsAdminDlg.getHSelf())
+		// || isRightDlg(_pluginsAdminDlg.getHSelf())
 		|| (ScintillaEditView::getUserDefineDlg() != nullptr
 			&& isRightDlg(ScintillaEditView::getUserDefineDlg()->getHSelf()))
 		)
@@ -6710,7 +6710,7 @@ void Notepad_plus::notifyBufferChanged(Buffer * buffer, int mask)
 				scnN.nmhdr.code = NPPN_FILEDELETED;
 				scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 				scnN.nmhdr.idFrom = (uptr_t)buffer->getID();
-				_pluginsManager.notify(&scnN);
+				// _pluginsManager.notify(&scnN);
 
 				if (buffer->isInaccessible() && nppParam.isPlaceHolderEnabled())
 				{
@@ -6755,7 +6755,7 @@ void Notepad_plus::notifyBufferChanged(Buffer * buffer, int mask)
 		scnN.nmhdr.hwndFrom = (void *)buffer->getID();
 		scnN.nmhdr.idFrom = (uptr_t)  ((isSysReadOnly || isUserReadOnly? DOCSTATUS_READONLY : 0) | (isDirty ? DOCSTATUS_BUFFERDIRTY : 0));
 		scnN.nmhdr.code = NPPN_READONLYCHANGED;
-		_pluginsManager.notify(&scnN);
+		// _pluginsManager.notify(&scnN);
 	}
 
 	if (_pDocumentListPanel)
@@ -6800,7 +6800,7 @@ void Notepad_plus::notifyBufferChanged(Buffer * buffer, int mask)
 		scnN.nmhdr.code = NPPN_LANGCHANGED;
 		scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 		scnN.nmhdr.idFrom = (uptr_t)_pEditView->getCurrentBufferID();
-		_pluginsManager.notify(&scnN);
+		// _pluginsManager.notify(&scnN);
 	}
 
 	if (mask & (BufferChangeFormat|BufferChangeLanguage|BufferChangeUnicode))
@@ -6859,7 +6859,7 @@ void Notepad_plus::notifyBufferActivated(BufferID bufid, int view)
 	scnN.nmhdr.code = NPPN_BUFFERACTIVATED;
 	scnN.nmhdr.hwndFrom = _pPublicInterface->getHSelf();
 	scnN.nmhdr.idFrom = (uptr_t)bufid;
-	_pluginsManager.notify(&scnN);
+	// _pluginsManager.notify(&scnN);
 
 	if (_pDocumentListPanel)
 	{
@@ -7234,7 +7234,7 @@ bool Notepad_plus::reloadLang()
 
     _nativeLangSpeaker.init(nativeLangDocRoot, true);
 
-    nppParam.reloadContextMenuFromXmlTree(_mainMenuHandle, _pluginsManager.getMenuHandle());
+    // nppParam.reloadContextMenuFromXmlTree(_mainMenuHandle, _pluginsManager.getMenuHandle());
 
 	_nativeLangSpeaker.changeMenuLang(_mainMenuHandle);
     ::DrawMenuBar(_pPublicInterface->getHSelf());
@@ -7337,10 +7337,10 @@ bool Notepad_plus::reloadLang()
         _nativeLangSpeaker.changeDlgLang(_colEditorDlg.getHSelf(), "ColumnEditor");
 	}
 
-	if (_pluginsAdminDlg.isCreated())
-	{
-		_nativeLangSpeaker.changePluginsAdminDlgLang(_pluginsAdminDlg);
-	}
+	// if (_pluginsAdminDlg.isCreated())
+	// {
+	// 	_nativeLangSpeaker.changePluginsAdminDlgLang(_pluginsAdminDlg);
+	// }
 
 	if (_debugInfoDlg.isCreated())
 	{
@@ -8463,7 +8463,8 @@ void Notepad_plus::showQuote(const QuoteParams* quote) const
 void Notepad_plus::minimizeDialogs()
 {
 	static StaticDialog* modelessDlgs[] = {&_findReplaceDlg, &_aboutDlg, &_debugInfoDlg, &_runDlg, &_goToLineDlg, &_colEditorDlg, &_configStyleDlg,\
-		&_preference, &_pluginsAdminDlg, &_findCharsInRangeDlg, &_md5FromFilesDlg, &_md5FromTextDlg, &_sha2FromFilesDlg, &_sha2FromTextDlg, &_runMacroDlg};
+		&_preference, // &_pluginsAdminDlg,
+		&_findCharsInRangeDlg, &_md5FromFilesDlg, &_md5FromTextDlg, &_sha2FromFilesDlg, &_sha2FromTextDlg, &_runMacroDlg};
 	
 	static size_t nbModelessDlg = sizeof(modelessDlgs) / sizeof(StaticDialog*);
 

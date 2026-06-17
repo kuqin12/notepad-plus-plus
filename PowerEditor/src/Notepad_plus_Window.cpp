@@ -87,8 +87,8 @@ void Notepad_plus_Window::init(HINSTANCE hInst, HWND parent, const wchar_t *cmdL
 	NppParameters& nppParams = NppParameters::getInstance();
 	NppGUI & nppGUI = nppParams.getNppGUI();
 
-	if (cmdLineParams->_isNoPlugin)
-		_notepad_plus_plus_core._pluginsManager.disable();
+	// if (cmdLineParams->_isNoPlugin)
+	// 	_notepad_plus_plus_core._pluginsManager.disable();
 
 	nppGUI._isCmdlineNosessionActivated = cmdLineParams->_isNoSession;
 	nppGUI._isFullReadOnly = cmdLineParams->_isFullReadOnly;
@@ -117,7 +117,7 @@ void Notepad_plus_Window::init(HINSTANCE hInst, HWND parent, const wchar_t *cmdL
 		scnN.nmhdr.code = NPPN_CMDLINEPLUGINMSG;
 		scnN.nmhdr.hwndFrom = _hSelf;
 		scnN.nmhdr.idFrom = reinterpret_cast<uptr_t>(cmdLineParams->_pluginMessage.c_str());
-		_notepad_plus_plus_core._pluginsManager.notify(&scnN);
+		// _notepad_plus_plus_core._pluginsManager.notify(&scnN);
 	}
 
 	PaintLocker paintLocker{_hSelf};
@@ -346,7 +346,7 @@ void Notepad_plus_Window::init(HINSTANCE hInst, HWND parent, const wchar_t *cmdL
 	scnN.nmhdr.code = NPPN_READY;
 	scnN.nmhdr.hwndFrom = _hSelf;
 	scnN.nmhdr.idFrom = 0;
-	_notepad_plus_plus_core._pluginsManager.notify(&scnN);
+	// _notepad_plus_plus_core._pluginsManager.notify(&scnN);
 
 	if (!cmdLineParams->_easterEggName.empty())
 	{
